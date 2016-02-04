@@ -114,7 +114,7 @@ So the range for the position is -4..4 meters from the base in all directions.
 
 The rotation quaternion values are as is, from -1 to 1.
 
-The thumb joysticks have common mapping also from -1 to 1. The trigger has a range from 0 (released) to 1 (pulled), with also the intermediate values.
+The thumb joysticks have common mapping also from -1 to 1. The trigger also has a range from -1 (released) to 1 (pulled).
 
 The buttons have released state 0 and pushed state 1 (no intermediate values)
 The special buttons number 7 and 14 tell if the given controller (respectively the
