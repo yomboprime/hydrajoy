@@ -76,7 +76,7 @@ If the program stops, read the last line (well, almost) of the console to know t
 
 While the program runs all right there will be error messages in the console about USB stuff, don't pay attention to them, it's a known harmless bug.
 
-If all goes well, You should have now a /dev/input/js0 device available to applications. See "Joystick axis and buttons" section for usage.
+If all goes well, You should have now a `/dev/input/js0` device available to applications. See "Joystick axis and buttons" section for usage.
 
 To stop the program hit ctrl-c in the console.
 
