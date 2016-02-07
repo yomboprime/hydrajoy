@@ -4,7 +4,7 @@ A program that exposes the Razer Hydra controller as a 20 axis virtual joystick 
 
 The virtual joystick can be used inside html5 applications in the web browser, for example.
 
-(c) 2016 GPLv3 Juan Jose Luna Espinosa juanjoluna@gmail.com
+(c) 2016 GPLv3 Juan Jose Luna Espinosa juanjoluna at gmail dot com
 
 Please read the Sixense SDK license.
 
