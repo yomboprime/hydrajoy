@@ -14,12 +14,13 @@
 #include <inttypes.h>
 #include <time.h>
 #include <math.h>
-#include <stdio.h>
 #include <string.h>
 
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <linux/fcntl.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdio.h>
 
 #include <signal.h>
 
@@ -54,17 +55,17 @@ static volatile int keepRunning = 1;
 
 int initHydra( void );
 void finishHydra( void );
-inline void printControllerData( sixenseControllerData * data );
+void printControllerData( sixenseControllerData * data );
 
 int initUInput( void );
 void finishUInput( int fd );
 
 int fillHydraEvents( sixenseAllControllerData *allControllerData, struct input_event *eventBuffer );
-inline void fillAbsEvent( struct input_event *event, int code, int value );
-inline void fillKeyEvent( struct input_event *event, int code, int value );
-inline void fillSyncEvent( struct input_event *event );
-inline void fillPositionalAxisEvent( struct input_event *event, int code, float value );
-inline void fillRawAxisEvent( struct input_event *event, int code, float value );
+void fillAbsEvent( struct input_event *event, int code, int value );
+void fillKeyEvent( struct input_event *event, int code, int value );
+void fillSyncEvent( struct input_event *event );
+void fillPositionalAxisEvent( struct input_event *event, int code, float value );
+void fillRawAxisEvent( struct input_event *event, int code, float value );
     
 void waitNanoseconds( long nanos );
 void signalHandler( int notUsed );
@@ -149,7 +150,7 @@ int initHydra( void ) {
         if ( connected ) {
             connectedBase = i;
             sixenseSetActiveBase( connectedBase );
-            printf( "Connected to Razer Hydra base number %d\n" + i );
+            printf( "Connected to Razer Hydra base number %d\n", i );
             break;
         }
     }
@@ -303,37 +304,37 @@ int fillHydraEvents( sixenseAllControllerData *allControllerData, struct input_e
     return numEvents;
 }
 
-inline void fillAbsEvent( struct input_event *event, int code, int value ) {
+void fillAbsEvent( struct input_event *event, int code, int value ) {
     event->type = EV_ABS;
     event->code = code;
     event->value = value;
 }
 
-inline void fillKeyEvent( struct input_event *event, int code, int value ) {
+void fillKeyEvent( struct input_event *event, int code, int value ) {
     event->type = EV_KEY;
     event->code = code;
     event->value = value;
 }
 
-inline void fillSyncEvent( struct input_event *event ) {
+void fillSyncEvent( struct input_event *event ) {
     event->type = EV_SYN;
     event->code = SYN_REPORT;
     event->value = 0;
 }
 
-inline void fillPositionalAxisEvent( struct input_event *event, int code, float value ) { 
+void fillPositionalAxisEvent( struct input_event *event, int code, float value ) { 
     // Convert mm to meters and divide by position range
     value *= 0.001f / POSITION_RANGE;
     int valueInt = (int)( value * MAX_AXIS_VALUE );
     fillAbsEvent( event, code, valueInt );
 }
 
-inline void fillRawAxisEvent( struct input_event *event, int code, float value ) { 
+void fillRawAxisEvent( struct input_event *event, int code, float value ) { 
     int valueInt = (int)( value * MAX_AXIS_VALUE );
     fillAbsEvent( event, code, valueInt );
 }
 
-inline void printControllerData( sixenseControllerData * data ) {
+void printControllerData( sixenseControllerData * data ) {
     
     if ( data->enabled && !data->is_docked ) {
     
